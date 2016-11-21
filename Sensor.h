@@ -17,12 +17,12 @@ class Sensor{
 public:
 	Sensor(void);
   bool publishData(int32_t data);
-  bool registerCloud(uint32_t sensor_id, String type, bool isWireless);
+  bool registerCloud(String sensor_id, String type, bool isWireless);
 
 private:
   bool handleCloud(const char *eventName, const char *data);
 
-  uint32_t _sensor_id;
+  const char *_sensor_id;
   uint32_t _publishRate;
 
 };
