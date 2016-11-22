@@ -16,14 +16,27 @@
 class Sensor{
 public:
 	Sensor(void);
+	bool checkForData();
+	int32_t getData();
+	bool checkHealth();
+
+// These will be protected/private
   bool publishData(int32_t data);
+	bool recieveSettings(void);
+	bool detectNewSensor(void);
+	bool saveMem(void);
+	bool loadMem(void);
   bool registerCloud(String sensor_id, String type, bool isWireless);
 
 private:
-  bool handleCloud(const char *eventName, const char *data);
 
   const char *_sensor_id;
   uint32_t _publishRate;
+	uint32_t _updateRate;
+	int32_t _currentData;
+	bool hasNewData;
+	uint32_t _lastDataTime;
+	bool isAlive;
 
 };
 
