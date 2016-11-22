@@ -1,9 +1,31 @@
 #include "Sensor.h"
 
-Sensor::Sensor(void) {
-  _publishRate = 60000;
-  _sensor_id = "FFFFFFFFFFFFFFFFFF";
+Sensor::Sensor(int16_t memAddress) {
+  if(memAddress < 1) { // New Sensor
+    _sensor_id = "FFFFFFFFFFFFFFFFFF";
+    _publishRate = 60000;
+  	_updateRate = 60000;
+  	_currentData = random(10,100);
+  	_hasNewData = true;
+  	_lastDataTime = millis();
+  	_isAlive = true;
+  } else {
+    // loadMem(memAddress);
+  }
 }
+
+bool Sensor::checkForData(void) {
+  return _hasNewData;
+}
+
+int32_t Sensor::getData(void) {
+  return _currentData;
+}
+
+bool Sensor::checkHealth(void) {
+  return _isAlive;
+}
+
 bool Sensor::publishData(int32_t data) {
   String publishString = String("{sID: " + String(_sensor_id) + ",data: " + String(data) + "}");
   bool returnVal = Particle.publish("data", publishString, PRIVATE);
@@ -16,17 +38,12 @@ bool Sensor::registerCloud(String sensor_id, String type, bool isWireless) {
   Serial.println("Register Cloud");
   return returnVal;
 }
-bool Sensor::handleCloud(const char *eventName, const char *data) { // data is format "sID,rate"
-  // extract target sensor_id and new updateRate
-  String dataString = String(data);
-  uint16_t idx = dataString.indexOf(',');
-  String targetSID = dataString.substring(0,idx);
-  uint32_t newRate = dataString.substring(idx+1).toInt();
-  Serial.printlnf("targetSID: %s, newRate: %d", (const char *)targetSID, newRate);
 
-  // Check if sID matches and set new rate
-  if(String(_sensor_id) == targetSID) {
-    _publishRate = newRate;
+bool Sensor::recieveSettings(const char *id, uint32_t publishRate, uint32_t updateRate) {
+  if(String(id).equals(String(_sensor_id))) {
+    _publishRate = publishRate;
+    _updateRate = updateRate;
+    return true;
   }
-  return true;
+  return false;
 }
