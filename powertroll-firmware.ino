@@ -1,4 +1,5 @@
 #include "application.h"
+#include "pins010317.h"
 #include "Sensor.h"
 #include "sensitive_info.h"
 #include "cloud_functions.h"

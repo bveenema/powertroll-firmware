@@ -19,6 +19,8 @@ public:
 	bool checkForData();
 	int32_t getData();
 	bool checkHealth();
+	bool getHealth();
+	bool shouldPublish();
 	bool recieveSettings(const char *id, uint32_t publishRate, uint32_t updateRate);
 
 // These will be protected/private
@@ -30,8 +32,9 @@ public:
 
 private:
 
-  const char *_sensor_id;
+  char [18];
   uint32_t _publishRate;
+	bool _lastPublish;
 	uint32_t _updateRate;
 	int32_t _currentData;
 	bool _hasNewData;
