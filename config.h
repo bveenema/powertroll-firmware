@@ -132,16 +132,27 @@ Config.h
           //    3: LED (button is omni LED that detects when user touches) Not Implemented
           #define OMNI_BUTTON_TYPE 0
 
+          // Internal pullup
+          //    0: Use external resistor
+          //    1: Use internal pullup resistor - can only be used with active low
+          //          ie. OMNI_BUTTON_TYPE == 0
+          #define OMNI_BUTTON_PULLUP 0
+
+          // Debounce time
+          //  Amount of time to wait for the button to be considered "debounced"
+          //    unit: milliseconds
+          #define DEBOUCE_TIME 50
+
           // Long Press time
           //  Amount of time the omni button is pressed to initial a "long press"
           //    unit: milliseconds
           #define LONG_PRESS_TIME 1500
 
-          // Multipress time
+          // Multiclick time
           //  Amount of time alloted for a multipress of the button (double tap)
           //  Too much time results in poor UI
           //    unit: milliseconds
-          #define MULTIPRESS_TIME 300
+          #define MULTICLICK_TIME 300
         #endif
 
     //=========================================================================
@@ -198,8 +209,10 @@ Config.h
     #define ENABLE_OMNI_BUTTON
       #ifdef ENABLE_OMNI_BUTTON
         #define OMNI_BUTTON_TYPE 0
+        #define OMNI_BUTTON_PULLUP 0
+        #define DEBOUCE_TIME 50
         #define LONG_PRESS_TIME 1500
-        #define MULTIPRESS_TIME 300
+        #define MULTICLICK_TIME 300
       #endif
 
     #define ENABLE_OMNI_LED
