@@ -154,6 +154,15 @@ Config.h
           //    1: RGB
           #define OMNI_LED_TYPE 0
 
+          // LED off state
+          //    0: LED is OFF when driven LOW
+          //    1: LED is OFF when driven HIGH
+          #define OMNI_LED_OFF 0
+
+          // LED Brightness
+          //  sets the default brightness of the LED (0-255)
+          #define OMNI_LED_BRIGHTNESS 255
+
           // Blink Rate - Half cycle blink Rate - unit: milliseconds
           #define OMNI_LED_BLINK_RATE 250
 
@@ -205,6 +214,8 @@ Config.h
     #define ENABLE_OMNI_LED
       #ifdef ENABLE_OMNI_LED
         #define OMNI_LED_TYPE 0
+        #define OMNI_LED_OFF 0
+        #define OMNI_LED_BRIGHTNESS 255
         #define OMNI_LED_BLINK_RATE 250
         #define OMNI_LED_BREATE_RATE 1000
       #endif
