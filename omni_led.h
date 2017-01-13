@@ -9,7 +9,7 @@ Omni LED Driver - The omni led is the "quick glance" UI element for the troll.
 
   Requires frequent updates (calling omni_led.update), min rate TBD.
 
-  Has the following modes:
+  Has the following modes (update NUM_MODES when adding new modes):
     0: Constant OFF
     1: Constant ON
     2: Mirror photon LED (in single color mode only pattern is mirrored)
@@ -30,6 +30,7 @@ Omni LED Driver - The omni led is the "quick glance" UI element for the troll.
 #define omni_led_h
   #ifdef ENABLE_OMNI_LED
   #include "application.h"
+  #define NUM_MODES = 5
 
     class omni_led {
     public:
@@ -43,18 +44,18 @@ Omni LED Driver - The omni led is the "quick glance" UI element for the troll.
 
     private:
       uint8_t calculateBreath(uint32_t currentTime);
-      void driveLED(uint8_t duty);
+      void driveLED(uint8_t brightness);
       #if OMNI_LED_TYPE == 1
-        void driveLED (uint8_t Rduty, uint8_t Gduty, uint8_t Bduty);
+        void driveLED (uint8_t brightness, Rduty, uint8_t Gduty, uint8_t Bduty);
       #endif // OMNI_LED_TYPE == 1
 
       #if OMNI_LED_TYPE == 0
-        uint8_t _lastDuty;
+        uint8_t _lastBrightness;
       #endif //OMNI_LED_TYPE == 0
       #if OMNI_LED_TYPE == 1
-        uint8_t _last_R_duty, _last_G_duty, _last_B_duty;
+        uint8_t _lastBrightness, _last_R_duty, _last_G_duty, _last_B_duty;
       #endif //OMNI_LED_TYPE == 1
-      uint8_t _mode, _brightness;
+      uint8_t _mode, _maxBrightness;
       uint32_t _lastUpdateTime;
     }
 
